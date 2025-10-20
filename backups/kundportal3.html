@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal - NordicBuild</title>
+    <meta name="description" content="Access your construction project dashboard, track progress, communicate with your team, and manage documents through NordicBuild's client portal.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nordic-blue': '#4A90A4',
+                        'sage-green': '#7BA05B',
+                        'deep-charcoal': '#2C3E50',
+                        'warm-white': '#FAFAFA',
+                        'success-green': '#27AE60',
+                        'warning-amber': '#F39C12'
+                    },
+                    fontFamily: {
+                        'display': ['Inter', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .portal-bg {
+            background: linear-gradient(135deg, rgba(74, 144, 164, 0.05) 0%, rgba(123, 160, 91, 0.05) 100%);
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 144, 164, 0.1);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+        
+        .chat-message {
+            animation: slideInMessage 0.3s ease-out;
+        }
+        
+        @keyframes slideInMessage {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .kanban-card {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        
+        .kanban-card:active {
+            cursor: grabbing;
+            transform: rotate(5deg);
+        }
+        
+        .kanban-column {
+            min-height: 400px;
+        }
+        
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-warm-white text-deep-charcoal font-body">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-nordic-blue rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">NB</span>
+                    </div>
+                    <span class="text-xl font-bold text-deep-charcoal">NordicBuild</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Home</a>
+                    <a href="services.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Services</a>
+                    <a href="portal.html" class="text-nordic-blue font-semibold">Client Portal</a>
+                    <a href="admin.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Admin</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 text-gray-600 hover:text-nordic-blue transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center notification-badge">3</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User Avatar" class="w-10 h-10 rounded-full">
+                        <div class="hidden md:block">
+                            <div class="font-semibold text-sm">John Andersson</div>
+                            <div class="text-xs text-gray-500">Project Manager</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 portal-bg min-h-screen">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Welcome back, John!</h1>
+                <p class="text-gray-600">Here's what's happening with your projects today.</p>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Column - Project Overview -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Active Projects -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold">Active Projects</h2>
+                            <button class="px-4 py-2 bg-nordic-blue text-white rounded-lg hover:bg-deep-charcoal transition-colors text-sm">
+                                View All
+                            </button>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="hover-lift bg-white rounded-xl p-6 border border-gray-100">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-semibold">Eco Residential Complex</h3>
+                                    <span class="px-2 py-1 bg-success-green text-white text-xs rounded-full">On Track</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4">Stockholm, Sweden • 2,500 m²</p>
+                                
+                                <!-- Progress Circle -->
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative w-16 h-16">
+                                            <svg class="progress-ring w-16 h-16" viewBox="0 0 120 120">
+                                                <circle cx="60" cy="60" r="54" stroke="#e5e7eb" stroke-width="12" fill="transparent"/>
+                                                <circle cx="60" cy="60" r="54" stroke="#4A90A4" stroke-width="12" fill="transparent" 
+                                                        stroke-dasharray="339.292" stroke-dashoffset="101.788" class="progress-ring-circle"/>
+                                            </svg>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="text-sm font-bold">70%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold">Phase 3: Construction</div>
+                                            <div class="text-xs text-gray-500">Completion: March 2025</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Budget: €3.2M</span>
+                                    <span class="text-success-green">AI Optimized: -€480K</span>
+                                </div>
+                            </div>
+                            
+                            <div class="hover-lift bg-white rounded-xl p-6 border border-gray-100">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-semibold">Smart Office Tower</h3>
+                                    <span class="px-2 py-1 bg-warning-amber text-white text-xs rounded-full">Attention</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-4">Oslo, Norway • 4,200 m²</p>
+                                
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative w-16 h-16">
+                                            <svg class="progress-ring w-16 h-16" viewBox="0 0 120 120">
+                                                <circle cx="60" cy="60" r="54" stroke="#e5e7eb" stroke-width="12" fill="transparent"/>
+                                                <circle cx="60" cy="60" r="54" stroke="#F39C12" stroke-width="12" fill="transparent" 
+                                                        stroke-dasharray="339.292" stroke-dashoffset="169.646" class="progress-ring-circle"/>
+                                            </svg>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="text-sm font-bold">50%</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-semibold">Phase 2: Structure</div>
+                                            <div class="text-xs text-gray-500">Completion: June 2025</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between text-sm">
+                                    <span class="text-gray-600">Budget: €5.1M</span>
+                                    <span class="text-warning-amber">Review Needed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Timeline -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h2 class="text-xl font-bold mb-6">Project Timeline</h2>
+                        <div class="relative">
+                            <!-- Timeline items -->
+                            <div class="space-y-6">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-3 h-3 bg-success-green rounded-full mt-2"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-semibold">Foundation Complete</h4>
+                                            <span class="text-xs text-gray-500">2 days ago</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Eco Residential Complex foundation work completed ahead of schedule.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-3 h-3 bg-nordic-blue rounded-full mt-2"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-semibold">Structural Review</h4>
+                                            <span class="text-xs text-gray-500">Today</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Smart Office Tower structural engineering review scheduled for this week.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-3 h-3 bg-gray-300 rounded-full mt-2"></div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-semibold">MEP Installation</h4>
+                                            <span class="text-xs text-gray-500">Next week</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600">Mechanical, electrical, and plumbing installation to begin.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kanban Board -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold">Task Management</h2>
+                            <button onclick="addNewTask()" class="px-4 py-2 bg-sage-green text-white rounded-lg hover:bg-success-green transition-colors text-sm">
+                                Add Task
+                            </button>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="kanban-column">
+                                <h3 class="font-semibold text-sm text-gray-600 mb-4 flex items-center justify-between">
+                                    <span>To Do</span>
+                                    <span class="bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs">3</span>
+                                </h3>
+                                <div class="space-y-3" id="todo-column">
+                                    <div class="kanban-card bg-white p-4 rounded-lg border border-gray-200 shadow-sm" draggable="true">
+                                        <h4 class="font-semibold text-sm mb-2">Review HVAC Plans</h4>
+                                        <p class="text-xs text-gray-600 mb-3">Check mechanical drawings for Eco Residential</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">High Priority</span>
+                                            <span class="text-xs text-gray-500">Due: Today</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="kanban-card bg-white p-4 rounded-lg border border-gray-200 shadow-sm" draggable="true">
+                                        <h4 class="font-semibold text-sm mb-2">Site Inspection</h4>
+                                        <p class="text-xs text-gray-600 mb-3">Weekly safety inspection Smart Office Tower</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Medium</span>
+                                            <span class="text-xs text-gray-500">Due: Tomorrow</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <h3 class="font-semibold text-sm text-gray-600 mb-4 flex items-center justify-between">
+                                    <span>In Progress</span>
+                                    <span class="bg-nordic-blue text-white px-2 py-1 rounded-full text-xs">2</span>
+                                </h3>
+                                <div class="space-y-3" id="progress-column">
+                                    <div class="kanban-card bg-white p-4 rounded-lg border border-nordic-blue shadow-sm" draggable="true">
+                                        <h4 class="font-semibold text-sm mb-2">Window Installation</h4>
+                                        <p class="text-xs text-gray-600 mb-3">Installing energy-efficient windows</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">On Track</span>
+                                            <div class="w-16 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-success-green h-2 rounded-full" style="width: 75%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column">
+                                <h3 class="font-semibold text-sm text-gray-600 mb-4 flex items-center justify-between">
+                                    <span>Completed</span>
+                                    <span class="bg-success-green text-white px-2 py-1 rounded-full text-xs">5</span>
+                                </h3>
+                                <div class="space-y-3" id="completed-column">
+                                    <div class="kanban-card bg-white p-4 rounded-lg border border-success-green shadow-sm" draggable="true">
+                                        <h4 class="font-semibold text-sm mb-2">Foundation Pour</h4>
+                                        <p class="text-xs text-gray-600 mb-3">Completed foundation concrete work</p>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-xs bg-success-green text-white px-2 py-1 rounded-full">Done</span>
+                                            <span class="text-xs text-gray-500">Completed</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Communication & Documents -->
+                <div class="space-y-8">
+                    <!-- AI Assistant -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h2 class="text-xl font-bold mb-4">AI Assistant</h2>
+                        <div class="bg-gray-50 rounded-lg p-4 h-64 overflow-y-auto mb-4" id="chat-messages">
+                            <div class="chat-message mb-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-nordic-blue rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div class="bg-white p-3 rounded-lg shadow-sm">
+                                        <p class="text-sm">Hello! I'm your AI construction assistant. How can I help you with your projects today?</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <input type="text" id="chat-input" placeholder="Ask about your projects..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:border-nordic-blue focus:outline-none text-sm">
+                            <button onclick="sendMessage()" class="px-4 py-2 bg-nordic-blue text-white rounded-lg hover:bg-deep-charcoal transition-colors">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Documents -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold">Recent Documents</h2>
+                            <button class="text-nordic-blue hover:text-deep-charcoal transition-colors text-sm">View All</button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Structural Drawings v2.1</h4>
+                                    <p class="text-xs text-gray-600">Updated 2 hours ago • 2.4 MB</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3 p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Energy Analysis Report</h4>
+                                    <p class="text-xs text-gray-600">Updated yesterday • 1.8 MB</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-3 p-3 bg-white rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-sm">Project Timeline v3.0</h4>
+                                    <p class="text-xs text-gray-600">Updated 3 days ago • 856 KB</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-4 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-nordic-blue hover:text-nordic-blue transition-colors">
+                            <svg class="w-5 h-5 mx-auto mb-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                            Upload New Document
+                        </button>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
+                        <div class="space-y-3">
+                            <button class="w-full p-3 bg-nordic-blue text-white rounded-lg hover:bg-deep-charcoal transition-colors text-left">
+                                <div class="font-semibold text-sm">Schedule Site Visit</div>
+                                <div class="text-xs opacity-80">Book your next project inspection</div>
+                            </button>
+                            
+                            <button class="w-full p-3 bg-sage-green text-white rounded-lg hover:bg-success-green transition-colors text-left">
+                                <div class="font-semibold text-sm">Request Progress Report</div>
+                                <div class="text-xs opacity-80">Get detailed project status update</div>
+                            </button>
+                            
+                            <button class="w-full p-3 bg-warning-amber text-white rounded-lg hover:bg-orange-600 transition-colors text-left">
+                                <div class="font-semibold text-sm">AI Cost Analysis</div>
+                                <div class="text-xs opacity-80">Run optimization analysis</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize portal
+        document.addEventListener('DOMContentLoaded', function() {
+            initDragAndDrop();
+            initChat();
+            loadProjectData();
+        });
+
+        // Drag and Drop functionality for Kanban board
+        function initDragAndDrop() {
+            const cards = document.querySelectorAll('.kanban-card');
+            const columns = document.querySelectorAll('.kanban-column');
+
+            cards.forEach(card => {
+                card.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', '');
+                    this.style.opacity = '0.5';
+                });
+
+                card.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+            });
+
+            columns.forEach(column => {
+                column.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = 'rgba(74, 144, 164, 0.1)';
+                });
+
+                column.addEventListener('dragleave', function(e) {
+                    this.style.backgroundColor = 'transparent';
+                });
+
+                column.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = 'transparent';
+                    
+                    const draggedCard = document.querySelector('.kanban-card[style*="opacity: 0.5"]');
+                    if (draggedCard) {
+                        this.querySelector('div').appendChild(draggedCard);
+                        updateColumnCounts();
+                    }
+                });
+            });
+        }
+
+        function updateColumnCounts() {
+            const columns = document.querySelectorAll('.kanban-column');
+            columns.forEach(column => {
+                const count = column.querySelectorAll('.kanban-card').length;
+                const badge = column.querySelector('span');
+                if (badge) {
+                    badge.textContent = count;
+                }
+            });
+        }
+
+        function addNewTask() {
+            const todoColumn = document.getElementById('todo-column');
+            const newTask = document.createElement('div');
+            newTask.className = 'kanban-card bg-white p-4 rounded-lg border border-gray-200 shadow-sm';
+            newTask.draggable = true;
+            
+            newTask.innerHTML = `
+                <h4 class="font-semibold text-sm mb-2">New Task</h4>
+                <p class="text-xs text-gray-600 mb-3">Click to edit task description</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full">New</span>
+                    <span class="text-xs text-gray-500">Due: TBD</span>
+                </div>
+            `;
+            
+            todoColumn.appendChild(newTask);
+            updateColumnCounts();
+            
+            // Add drag and drop to new card
+            newTask.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', '');
+                this.style.opacity = '0.5';
+            });
+
+            newTask.addEventListener('dragend', function(e) {
+                this.style.opacity = '1';
+            });
+        }
+
+        // Chat functionality
+        function initChat() {
+            const chatInput = document.getElementById('chat-input');
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message mb-3';
+            userMessage.innerHTML = `
+                <div class="flex items-start space-x-3 justify-end">
+                    <div class="bg-nordic-blue text-white p-3 rounded-lg shadow-sm max-w-xs">
+                        <p class="text-sm">${message}</p>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(userMessage);
+            
+            // Clear input
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'chat-message mb-3';
+                aiMessage.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-nordic-blue rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-sm max-w-xs">
+                            <p class="text-sm">${generateAIResponse(message)}</p>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(aiMessage);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateAIResponse(message) {
+            const responses = {
+                'cost': 'Based on current project data, I estimate potential cost savings of €480K through AI optimization.',
+                'timeline': 'Your Eco Residential project is 2 weeks ahead of schedule. Smart Office Tower needs attention on structural work.',
+                'energy': 'Energy analysis shows 40% efficiency improvement potential with recommended sustainable materials.',
+                'document': 'Recent documents include structural drawings v2.1 and energy analysis report. All accessible in your documents section.',
+                'default': 'I can help you with cost analysis, timeline updates, energy optimization, and document management. What specific information do you need?'
+            };
+            
+            const lowerMessage = message.toLowerCase();
+            for (const key in responses) {
+                if (lowerMessage.includes(key)) {
+                    return responses[key];
+                }
+            }
+            return responses.default;
+        }
+
+        // Load project data
+        function loadProjectData() {
+            // Simulate real-time updates
+            setInterval(() => {
+                updateProgressRings();
+            }, 30000); // Update every 30 seconds
+        }
+
+        function updateProgressRings() {
+            // Simulate progress updates
+            const progressRings = document.querySelectorAll('.progress-ring-circle');
+            progressRings.forEach(ring => {
+                // Small random progress changes
+                const currentOffset = parseFloat(ring.style.strokeDashoffset || '0');
+                const newOffset = currentOffset + (Math.random() - 0.5) * 10;
+                ring.style.strokeDashoffset = Math.max(0, Math.min(339.292, newOffset)) + 'px';
+            });
+        }
+    </script>
+</body>
+</html>

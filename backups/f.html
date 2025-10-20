@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordicBuild Group - Enhanced Portals</title>
+    <meta name="description" content="NordicBuild Group - Byggföretag med framtiden i sikte">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #0d3b66;
+            --secondary: #f4a261;
+            --accent: #2a9d8f;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --portal-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --sidebar-bg: #1a2b3c;
+            --sidebar-text: #e9ecef;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #e76f51;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #0a2d4d;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 1rem auto;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(13, 59, 102, 0.8), rgba(13, 59, 102, 0.9)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 8rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Portal Links Section */
+        .portal-links {
+            background-color: var(--portal-bg);
+        }
+
+        .portal-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portal-card {
+            background: linear-gradient(135deg, var(--primary), #1a4a7a);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .portal-card i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .portal-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .portal-card p {
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .portal-card .btn {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .portal-card .btn:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-links h3 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Portal Pages Styles - IMPROVED */
+        .portal-header {
+            background: linear-gradient(135deg, var(--primary), #1a4a7a);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .portal-container {
+            display: flex;
+            min-height: calc(100vh - 200px);
+        }
+
+        .portal-sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 2rem 1.5rem;
+        }
+
+        .portal-sidebar h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portal-sidebar ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .portal-sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .portal-sidebar ul li a:hover, .portal-sidebar ul li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--secondary);
+        }
+
+        .portal-sidebar ul li a i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .portal-main {
+            flex: 1;
+            background-color: var(--portal-bg);
+            padding: 2.5rem;
+        }
+
+        .portal-welcome {
+            background: linear-gradient(135deg, var(--primary), #1a4a7a);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-welcome h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .portal-welcome p {
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .portal-card-dark {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            transition: var(--transition);
+            border-left: 4px solid var(--accent);
+        }
+
+        .portal-card-dark:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .portal-card-dark h3 {
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .portal-card-dark h3 i {
+            margin-right: 0.75rem;
+            color: var(--secondary);
+        }
+
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--light-gray);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #34c9b0);
+            border-radius: 5px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            background-color: var(--light-gray);
+        }
+
+        .status-on-track {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-delayed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-list li {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+
+        .activity-list li i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .activity-success i {
+            color: var(--accent);
+        }
+
+        .activity-warning i {
+            color: #ffc107;
+        }
+
+        .activity-danger i {
+            color: #dc3545;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .metric-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #f0f2f5, #e1e5e9);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            margin-top: 1rem;
+        }
+
+        .alert {
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+
+        .alert i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-list li {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .file-list li:last-child {
+            border-bottom: none;
+        }
+
+        .file-list li i {
+            margin-right: 0.75rem;
+            color: var(--primary);
+        }
+
+        .file-list li a {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .file-list li a:hover {
+            color: var(--secondary);
+        }
+
+        .file-size {
+            margin-left: auto;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .portal-container {
+                flex-direction: column;
+            }
+            
+            .portal-sidebar {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            .portal-sidebar ul {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .portal-sidebar ul li {
+                margin-right: 1rem;
+                margin-bottom: 0;
+                white-space: nowrap;
+            }
+            
+            .portal-sidebar ul li a {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-toggle {
+                display: block;
+            }
+            
+            .portal-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .portal-main {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .portal-main {
+                padding: 1rem;
+            }
+            
+            .portal-card-dark {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-hard-hat"></i>
+                    NordicBuild Group
+                </a>
+                <button class="nav-toggle" id="navToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Hem</a></li>
+                    <li><a href="index.html#tjanster">Tjänster</a></li>
+                    <li><a href="index.html#projekt">Projekt</a></li>
+                    <li><a href="index.html#om-oss">Om oss</a></li>
+                    <li><a href="index.html#kontakt">Kontakt</a></li>
+                    <li><a href="#portaler" class="btn btn-primary">Portaler</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hem">
+        <div class="container">
+            <h1>Byggande med innovation och kvalitet</h1>
+            <p>NordicBuild Group kombinerar 20 års byggerfarenhet med moderna digitala verktyg för att leverera exceptionella resultat till våra kunder.</p>
+            <div class="hero-buttons">
+                <a href="#tjanster" class="btn">Våra tjänster</a>
+                <a href="#kontakt" class="btn btn-primary">Få en kostnadsfri offert</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portal Links Section -->
+    <section class="section portal-links" id="portaler">
+        <div class="container">
+            <h2 class="section-title">Våra digitala portaler</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 3rem;">Upptäck kraften i Waz Go med våra avancerade digitala portaler som ger dig full insyn och kontroll över ditt byggprojekt.</p>
+            
+            <div class="portal-cards">
+                <div class="portal-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Kundportal</h3>
+                    <p>Följ ditt byggprojekt i realtid med vår avancerade kundportal. Se framsteg, dokument och kommunikation på ett och samma ställe.</p>
+                    <a href="#customer-portal" class="btn" onclick="showPortal('customer')">Öppna Kundportal</a>
+                </div>
+                <div class="portal-card">
+                    <i class="fas fa-building"></i>
+                    <h3>Företagsportal</h3>
+                    <p>Effektiv projekthantering med Waz Go. Överblick över alla pågående projekt, ekonomi, team och resurser på ett och samma ställe.</p>
+                    <a href="#company-portal" class="btn" onclick="showPortal('company')">Öppna Företagsportal</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Portal -->
+    <section id="customer-portal" class="portal-section" style="display: none;">
+        <!-- Portal Header -->
+        <div class="portal-header">
+            <div class="container">
+                <h1>Kundportal</h1>
+                <p>Följ ditt byggprojekt i realtid med vår avancerade portal</p>
+            </div>
+        </div>
+
+        <!-- Portal Content -->
+        <div class="portal-container">
+            <!-- Sidebar -->
+            <div class="portal-sidebar">
+                <h3>Meny</h3>
+                <ul>
+                    <li><a href="#" class="tab-link active" data-tab="overview"><i class="fas fa-tachometer-alt"></i> Översikt</a></li>
+                    <li><a href="#" class="tab-link" data-tab="progress"><i class="fas fa-tasks"></i> Projektframsteg</a></li>
+                    <li><a href="#" class="tab-link" data-tab="invoices"><i class="fas fa-file-invoice"></i> Fakturor</a></li>
+                    <li><a href="#" class="tab-link" data-tab="documents"><i class="fas fa-file-contract"></i> Dokument</a></li>
+                    <li><a href="#" class="tab-link" data-tab="energy"><i class="fas fa-chart-line"></i> Energirapporter</a></li>
+                    <li><a href="#" class="tab-link" data-tab="calendar"><i class="fas fa-calendar-alt"></i> Kalender</a></li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">Ditt projekt</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Villa Stocksund</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> Projektinformation</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Kontakter</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Garantier</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="portal-main">
+                <!-- Welcome Card -->
+                <div class="portal-welcome">
+                    <h2>Välkommen till din projektportal, Anna och Mikael!</h2>
+                    <p>Din villa i Stocksund är för närvarande 65% färdig. Nästa milstolpe är takläggning som påbörjas den 5 november.</p>
+                </div>
+
+                <!-- Overview Tab -->
+                <div id="overview" class="tab-content active">
+                    <!-- Project Overview -->
+                    <div class="portal-grid">
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-chart-line"></i> Projektöversikt</h3>
+                            <p><strong>Projekt:</strong> Villa i Stocksund</p>
+                            <p><strong>Status:</strong> <span class="status-indicator status-on-track">På plan</span></p>
+                            <p><strong>Startdatum:</strong> 15 augusti 2023</p>
+                            <p><strong>Beräknat slutdatum:</strong> 15 februari 2024</p>
+                            
+                            <div class="progress-container">
+                                <p><strong>Framsteg:</strong></p>
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 65%;"></div>
+                                </div>
+                                <div class="progress-info">
+                                    <span>65% slutfört</span>
+                                    <span>105 av 162 dagar</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-bell"></i> Senaste uppdateringar</h3>
+                            <ul class="activity-list">
+                                <li class="activity-success">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <strong>Stomme uppförd</strong>
+                                        <p>22 oktober 2023 - All stomme är nu uppförd och godkänd.</p>
+                                    </div>
+                                </li>
+                                <li class="activity-success">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <strong>Grundarbete slutfört</strong>
+                                        <p>15 oktober 2023 - Grundarbetet är nu helt färdigt.</p>
+                                    </div>
+                                </li>
+                                <li class="activity-warning">
+                                    <i class="fas fa-clock"></i>
+                                    <div>
+                                        <strong>Takläggning pågår</strong>
+                                        <p>Påbörjas 5 november 2023 - Förväntad slutföring 20 november.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-leaf"></i> AI Energirapport</h3>
+                            <p>Baserat på ditt projekts design förväntas din energiförbrukning vara 35% lägre jämfört med liknande byggnader.</p>
+                            <div class="metric-card">
+                                <div class="metric-value">8 500 kr</div>
+                                <div class="metric-label">Beräknad årlig besparing</div>
+                            </div>
+                            <p>Denna beräkning baseras på ditt hus orientering, isoleringsnivåer och fönsterkvalitet.</p>
+                            <button class="btn" style="width: 100%; margin-top: 1rem;">Ladda ner fullständig rapport</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Tab -->
+                <div id="progress" class="tab-content">
+                    <div class="portal-card-dark">
+                        <h3><i class="fas fa-tasks"></i> Detaljerad projektframsteg</h3>
+                        <p>Här kan du följa detaljerad information om ditt projekts framsteg.</p>
+                        
+                        <div class="progress-container" style="margin-top: 2rem;">
+                            <p><strong>Total framsteg:</strong></p>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 65%;"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span>65% slutfört</span>
+                                <span>105 av 162 dagar</span>
+                            </div>
+                        </div>
+                        
+                        <h4 style="margin-top: 2rem;">Faser</h4>
+                        <ul class="activity-list">
+                            <li class="activity-success">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Planering & Tillstånd (100%)</strong>
+                                    <p>Slutförd: 30 augusti 2023</p>
+                                </div>
+                            </li>
+                            <li class="activity-success">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <strong>Grund & Stomme (100%)</strong>
+                                    <p>Slutförd: 22 oktober 2023</p>
+                                </div>
+                            </li>
+                            <li class="activity-warning">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Tak & Fasader (45%)</strong>
+                                    <p>Pågår - Beräknad slutföring: 20 november 2023</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-hourglass-start"></i>
+                                <div>
+                                    <strong>Inredning & Installation (0%)</strong>
+                                    <p>Startar: 21 november 2023</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Invoices Tab -->
+                <div id="invoices" class="tab-content">
+                    <div class="portal-card-dark">
+                        <h3><i class="fas fa-file-invoice"></i> Fakturaöversikt</h3>
+                        <div class="metric-card">
+                            <div class="metric-value">625 000 kr</div>
+                            <div class="metric-label">Totalt betalat</div>
+                        </div>
+                        <p><strong>Senaste faktura:</strong> 125,000 kr (Betald 20/10)</p>
+                        <p><strong>Nästa förfallodatum:</strong> 15/11 (175,000 kr)</p>
+                        <p><strong>Totalt projektpris:</strong> 1,250,000 kr</p>
+                        
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fakturanr</th>
+                                        <th>Belopp</th>
+                                        <th>Förfallodatum</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>NBG-23001</td>
+                                        <td>125 000 kr</td>
+                                        <td>20 okt 2023</td>
+                                        <td><span class="status-indicator status-on-track">Betald</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>NBG-23002</td>
+                                        <td>175 000 kr</td>
+                                        <td>15 nov 2023</td>
+                                        <td><span class="status-indicator">Väntar</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>NBG-23003</td>
+                                        <td>200 000 kr</td>
+                                        <td>15 dec 2023</td>
+                                        <td><span class="status-indicator">Väntar</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <button class="btn" style="width: 100%; margin-top: 1.5rem;">Visa alla fakturor</button>
+                    </div>
+                </div>
+
+                <!-- More tabs would go here... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Portal -->
+    <section id="company-portal" class="portal-section" style="display: none;">
+        <!-- Portal Header -->
+        <div class="portal-header">
+            <div class="container">
+                <h1>Företagsportal</h1>
+                <p>Effektiv projekthantering med Waz Go</p>
+            </div>
+        </div>
+
+        <!-- Portal Content -->
+        <div class="portal-container">
+            <!-- Sidebar -->
+            <div class="portal-sidebar">
+                <h3>Meny</h3>
+                <ul>
+                    <li><a href="#" class="tab-link active" data-tab="company-overview"><i class="fas fa-tachometer-alt"></i> Översikt</a></li>
+                    <li><a href="#" class="tab-link" data-tab="projects"><i class="fas fa-project-diagram"></i> Projekt</a></li>
+                    <li><a href="#" class="tab-link" data-tab="finance"><i class="fas fa-file-invoice-dollar"></i> Ekonomi</a></li>
+                    <li><a href="#" class="tab-link" data-tab="team"><i class="fas fa-users"></i> Team</a></li>
+                    <li><a href="#" class="tab-link" data-tab="resources"><i class="fas fa-truck-loading"></i> Resurser</a></li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">Verktyg</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-robot"></i> AI Riskanalys</a></li>
+                    <li><a href="#"><i class="fas fa-calculator"></i> Offertgenerator</a></li>
+                    <li><a href="#"><i class="fas fa-database"></i> CRM</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Avtalshantering</a></li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="portal-main">
+                <!-- Welcome Card -->
+                <div class="portal-welcome">
+                    <h2>Välkommen tillbaka, David!</h2>
+                    <p>Du har 8 aktiva projekt med en total omsättning på 12,5 MSEK för detta kvartal.</p>
+                </div>
+
+                <!-- Alerts -->
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <strong>Projekt X riskerar försening</strong> - Behöver 2 snickare till inom 3 dagar för att hålla tidplanen.
+                    </div>
+                </div>
+                
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div>
+                        <strong>Materialleverans försenad</strong> - Betong levereras 2 dagar sent till projekt Lidingö.
+                    </div>
+                </div>
+
+                <!-- Company Overview Tab -->
+                <div id="company-overview" class="tab-content active">
+                    <!-- Project Overview -->
+                    <div class="portal-grid">
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-project-diagram"></i> Projekthantering</h3>
+                            <div class="metric-card">
+                                <div class="metric-value">8</div>
+                                <div class="metric-label">Aktiva projekt</div>
+                            </div>
+                            <p><span class="status-indicator status-on-track">På plan: 6 projekt</span></p>
+                            <p><span class="status-indicator status-delayed">Försenade: 2 projekt</span></p>
+                            <p><strong>Genomsnittlig försening:</strong> 4 dagar</p>
+                            <button class="btn" style="width: 100%; margin-top: 1rem;">Visa alla projekt</button>
+                        </div>
+                        
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-robot"></i> AI Riskvarningar</h3>
+                            <ul class="activity-list">
+                                <li class="activity-danger">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <div>
+                                        <strong>Projekt X - Resursbrist</strong>
+                                        <p>Behöver 2 snickare till inom 3 dagar.</p>
+                                    </div>
+                                </li>
+                                <li class="activity-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div>
+                                        <strong>Projekt Lidingö - Materialförsening</strong>
+                                        <p>Betong levereras 2 dagar sent.</p>
+                                    </div>
+                                </li>
+                                <li class="activity-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <div>
+                                        <strong>Projekt Stocksund - Väderrisk</strong>
+                                        <p>Regn förväntas nästa vecka.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <button class="btn" style="width: 100%; margin-top: 1rem;">Visa fullständig analys</button>
+                        </div>
+                        
+                        <div class="portal-card-dark">
+                            <h3><i class="fas fa-calculator"></i> Automatiserad offert & CRM</h3>
+                            <div class="metric-card">
+                                <div class="metric-value">3</div>
+                                <div class="metric-label">Nya förfrågningar</div>
+                            </div>
+                            <p><strong>Offerter skickade:</strong> 5 denna månaden</p>
+                            <p><strong>Konverteringsgrad:</strong> 40%</p>
+                            <p><strong>Genomsnittligt offertvärde:</strong> 850 000 kr</p>
+                            <button class="btn" style="width: 100%; margin-top: 1rem;">Hantera förfrågningar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More company portal tabs would go here... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-hard-hat"></i>
+                        NordicBuild Group
+                    </div>
+                    <p>Byggande med innovation och kvalitet sedan 2003.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Länkar</h3>
+                    <ul>
+                        <li><a href="index.html">Hem</a></li>
+                        <li><a href="index.html#tjanster">Tjänster</a></li>
+                        <li><a href="index.html#projekt">Projekt</a></li>
+                        <li><a href="index.html#om-oss">Om oss</a></li>
+                        <li><a href="index.html#kontakt">Kontakt</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Portaler</h3>
+                    <ul>
+                        <li><a href="#customer-portal" onclick="showPortal('customer')">Kundportal</a></li>
+                        <li><a href="#company-portal" onclick="showPortal('company')">Företagsportal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Byggvägen 15, 113 47 Stockholm</li>
+                        <li><i class="fas fa-phone"></i> 08-123 45 67</li>
+                        <li><i class="fas fa-envelope"></i> info@nordicbuild.se</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 NordicBuild Group. Alla rättigheter förbehållna.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Portal Navigation
+        function showPortal(portalType) {
+            // Hide all portal sections
+            document.querySelectorAll('.portal-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected portal
+            if (portalType === 'customer') {
+                document.getElementById('customer-portal').style.display = 'block';
+            } else if (portalType === 'company') {
+                document.getElementById('company-portal').style.display = 'block';
+            }
+            
+            // Scroll to the portal
+            document.getElementById(portalType + '-portal').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Tab Navigation
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get the tab to activate
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs in the same portal
+                const portalSection = this.closest('.portal-section');
+                portalSection.querySelectorAll('.tab-link').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents in the same portal
+                portalSection.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected tab content
+                portalSection.querySelector('#' + tabId).classList.add('active');
+            });
+        });
+
+        // Close portal and return to main page
+        function closePortal() {
+            document.querySelectorAll('.portal-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('portaler').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Add close buttons to portals
+        document.addEventListener('DOMContentLoaded', function() {
+            const portalHeaders = document.querySelectorAll('.portal-header .container');
+            
+            portalHeaders.forEach(header => {
+                const closeButton = document.createElement('button');
+                closeButton.className = 'btn btn-primary';
+                closeButton.style.marginTop = '1rem';
+                closeButton.textContent = 'Tillbaka till huvudsidan';
+                closeButton.onclick = closePortal;
+                
+                header.appendChild(closeButton);
+            });
+        });
+    </script>
+</body>
+</html>

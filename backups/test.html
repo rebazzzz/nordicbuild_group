@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NordicBuild Group - Bygga Framtiden Med Förtroende och Teknik</title>
+    <meta name="description" content="NordicBuild Group är en ledande byggentreprenör i Skandinavien med 20 års erfarenhet. Vi kombinerar traditionellt hantverk med modern teknologi för att leverera exceptionella resultat.">
+    <meta name="keywords" content="byggföretag, renovering, nybyggnation, kommersiellt byggande, fastighetsunderhåll, Skandinavien">
+    <meta property="og:title" content="NordicBuild Group - Bygga Framtiden Med Förtroende och Teknik">
+    <meta property="og:description" content="20 års erfarenhet av byggprojekt i hela Skandinavien. Teknikdrivna lösningar för bättre resultat.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nordicbuildgroup.se">
+    <meta property="og:image" content="http://static.photos/construction/1200x630/1">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="test.css">
+ 
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-blue-800">NordicBuild</span>
+                        <span class="ml-1 text-orange-500 font-semibold">Group</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hem" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Hem</a>
+                    <a href="#tjanster" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Tjänster</a>
+                    <a href="#projekt" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Projekt</a>
+                    <a href="#om-oss" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Om Oss</a>
+                    <a href="#offer" class="bg-orange-500 text-white px-4 py-2 rounded-md font-medium hover:bg-orange-600">Få Offer</a>
+                    <a href="kundportal.html" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Kundportal</a>
+                    <a href="foretagsportal.html" class="text-gray-700 hover:text-blue-800 px-3 py-2 font-medium">Företagsportal</a>
+                </div>
+                
+                <div class="md:hidden flex items-center">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-800 focus:outline-none" aria-expanded="false">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hem" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <video autoplay muted loop class="hero-video">
+            <source src="http://static.photos/construction/1920x1080/2" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        
+        <div class="relative z-10 text-center text-white px-4 hero-content">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">NordicBuild Group</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Bygger framtiden med förtroende och teknik</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#offer" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    Få offert på 30 sekunder
+                </a>
+                <a href="#projekt" class="bg-transparent hover:bg-white hover:text-blue-800 text-white font-bold py-3 px-8 rounded-lg border-2 border-white transition duration-300">
+                    Se våra projekt
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="tjanster" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-4">Våra Tjänster</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Från renoveringar till nybyggnation - vi erbjuder kompletta lösningar för alla dina byggbehov</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Standard Services -->
+                <div class="service-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="home" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Renoveringar & Tillbyggnader</h3>
+                    <p class="text-gray-600">Professionella renoveringar och skräddarsydda tillbyggnader för att förvandla ditt hem</p>
+                </div>
+
+                <div class="service-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="layers" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Nybyggnation & Bostadsprojekt</h3>
+                    <p class="text-gray-600">Hus- och bostadsprojekt från grunden med högkvalitativa material och modern design</p>
+                </div>
+
+                <div class="service-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="briefcase" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Kommersiellt Byggande</h3>
+                    <p class="text-gray-600">Kontorslokaler, butiker och industriella fastigheter byggda efter dina specifikationer</p>
+                </div>
+
+                <div class="service-card bg-gray-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="tool" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Fastighetsunderhåll</h3>
+                    <p class="text-gray-600">Kontinuerligt underhåll och reparationer för att säkerställa dina fastigheters värde</p>
+                </div>
+            </div>
+
+            <!-- Enhanced Services powered by Waz Go -->
+            <div class="text-center mt-20 mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-4">Digitala Fördelar Med Waz Go</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Vår teknikplattform ger dig transparenta och effektiva byggprocesser</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="service-card bg-blue-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="bar-chart-2" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Digital Projektövervakning</h3>
+                    <p class="text-gray-600">Följ ditt projekts framsteg i realtid direkt från din mobil eller dator</p>
+                </div>
+
+                <div class="service-card bg-blue-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="cpu" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">AI Energioptimering</h3>
+                    <p class="text-gray-600">Smart teknik som analyserar och optimerar energianvändning för lägre kostnader</p>
+                </div>
+
+                <div class="service-card bg-blue-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="eye" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">3D/AR Visualisering</h3>
+                    <p class="text-gray-600">Se ditt framtida projekt i verklighetsförstorad miljö innan bygget påbörjas</p>
+                </div>
+
+                <div class="service-card bg-blue-50 p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="dollar-sign" class="text-blue-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Omedelbar OfferGenerator</h3>
+                    <p class="text-gray-600">Få en preliminär offert på mindre än 30 sekunder med vår AI-drivna teknik</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects/Portfolio Section -->
+    <section id="projekt" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-4">Våra Projekt</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Se exempel på våra framgångsrika byggprojekt i hela Skandinavien</p>
+            </div>
+
+            <!-- Before/After Slider -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold text-center mb-8">Innan & Efter: Villa Renovering</h3>
+                <div class="before-after-slider relative h-96 md:h-[500px] rounded-lg overflow-hidden">
+                    <img src="http://static.photos/construction/800x600/5" alt="Efter renovering" class="w-full h-full object-cover">
+                    <div class="before-image h-full">
+                        <img src="http://static.photos/construction/800x600/6" alt="Innan renovering" class="w-full h-full object-cover">
+                    </div>
+                    <div class="slider-handle"></div>
+                </div>
+            </div>
+
+            <!-- Project Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="http://static.photos/construction/600x400/7" alt="Kontorsbyggnad" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Moderna Kontorslokaler</h3>
+                        <p class="text-gray-600 mb-4">Stockholm, 2023</p>
+                        <p class="text-gray-700">1500 kvm kontorsyta med modern teknik och hållbar design</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="http://static.photos/construction/600x400/8" alt="Bostadsområde" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Bostadsområde Nordvik</h3>
+                        <p class="text-gray-600 mb-4">Göteborg, 2022</p>
+                        <p class="text-gray-700">24 nya enfamiljshus med energieffektiva lösningar</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg overflow-hidden shadow-md">
+                    <img src="http://static.photos/construction/600x400/9" alt="Butiksrenovering" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Butiksrenovering</h3>
+                        <p class="text-gray-600 mb-4">Malmö, 2023</p>
+                        <p class="text-gray-700">Fullständig renovering av köpcentrum med minimal driftstopp</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-center mb-8">Vad våra kunder säger</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="user" class="text-blue-800 w-10 h-10"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">"NordicBuilds digitala plattform gjorde att vi kunde följa vår renovering varje steg på vägen. Otroligt professionellt!"</p>
+                        <p class="font-semibold">Anna L.</p>
+                        <p class="text-sm text-gray-600">Villa renovering, Uppsala</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="user" class="text-blue-800 w-10 h-10"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">"AI-offerten var spot on med slutkostnaden. Inga obehagliga överraskningar och projektet blev klart i tid."</p>
+                        <p class="font-semibold">Markus K.</p>
+                        <p class="text-sm text-gray-600">Kontorsbyggnad, Stockholm</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="user" class="text-blue-800 w-10 h-10"></i>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">"3D-visualiseringen hjälpte oss att fatta bättre beslut innan bygget började. Sparade både tid och pengar."</p>
+                        <p class="font-semibold">Sara J.</p>
+                        <p class="text-sm text-gray-600">Tillbyggnad, Göteborg</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="om-oss" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-6">Om NordicBuild Group</h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Med över 20 års erfarenhet i Skandinaviens byggbransch har NordicBuild Group etablerat sig som en pålitlig partner för alla typer av byggprojekt.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Vår vision är att kombinera traditionellt hantverksskicklighet med modern teknologi för att leverera exceptionella resultat med transparens och effektivitet.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-feather="check" class="text-blue-800 w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">20+ års erfarenhet</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-feather="check" class="text-blue-800 w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">500+ projekt</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-feather="check" class="text-blue-800 w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">98% nöjda kunder</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i data-feather="check" class="text-blue-800 w-4 h-4"></i>
+                            </div>
+                            <span class="font-medium">Hållbart byggande</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <img src="http://static.photos/construction/600x400/10" alt="NordicBuild team" class="rounded-lg shadow-lg">
+                    <div class="absolute -bottom-4 -left-4 bg-orange-500 text-white p-4 rounded-lg shadow-lg">
+                        <p class="font-bold text-lg">Sedan 2003</p>
+                        <p class="text-sm">Bygger framtiden tillsammans</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-semibold mb-8">Våra Certifieringar</h3>
+                <div class="flex flex-wrap justify-center gap-8">
+                    <div class="bg-gray-100 p-6 rounded-lg w-32 h-32 flex items-center justify-center">
+                        <i data-feather="award" class="text-blue-800 w-12 h-12"></i>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg w-32 h-32 flex items-center justify-center">
+                        <i data-feather="shield" class="text-blue-800 w-12 h-12"></i>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg w-32 h-32 flex items-center justify-center">
+                        <i data-feather="star" class="text-blue-800 w-12 h-12"></i>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg w-32 h-32 flex items-center justify-center">
+                        <i data-feather="leaf" class="text-blue-800 w-12 h-12"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get a Quote Section -->
+    <section id="offer" class="py-20 bg-blue-800 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Få en Omedelbar Offert</h2>
+            <p class="text-xl mb-8">Vår AI-genererade offert ger dig en preliminär kostnadsuppskattning på mindre än 30 sekunder</p>
+            
+            <div class="bg-white text-gray-800 rounded-lg shadow-xl p-8">
+                <form id="quote-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Typ av projekt</label>
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>Renovering</option>
+                                <option>Nybyggnation</option>
+                                <option>Tillbyggnad</option>
+                                <option>Kommersiellt</option>
+                                <option>Underhåll</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Yta (kvm)</label>
+                            <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Ange yta">
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Material</label>
+                            <select class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option>Standard</option>
+                                <option>Premium</option>
+                                <option>Ekologiskt</option>
+                                <option>Special</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Budget (kr)</label>
+                            <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Ange budget">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Beskriv ditt projekt</label>
+                        <textarea rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Kort beskrivning av ditt projekt..."></textarea>
+                    </div>
+
+                    <button type="button" onclick="generateQuote()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded-lg transition duration-300">
+                        Generera Offert
+                    </button>
+                </form>
+
+                <div id="quote-result" class="hidden mt-8 p-6 bg-blue-50 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">Din Offert</h3>
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
+                        <div>
+                            <p class="font-medium">Uppskattad kostnad:</p>
+                            <p class="text-2xl font-bold text-blue-800" id="estimated-cost">450 000 - 550 000 kr</p>
+                        </div>
+                        <div>
+                            <p class="font-medium">Projekttid:</p>
+                            <p class="text-2xl font-bold text-blue-800" id="project-time">8-12 veckor</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                        <button class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                            Ladda ner PDF
+                        </button>
+                        <button class="bg-white hover:bg-gray-100 text-blue-800 font-bold py-3 px-6 rounded-lg border border-blue-800 transition duration-300">
+                            Boka Möte
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">NordicBuild Group</h3>
+                    <p class="text-gray-400">Bygger framtiden med förtroende och teknik sedan 2003</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Kontakt</h4>
+                    <p class="text-gray-400 mb-2">📞 08-123 456 78</p>
+                    <p class="text-gray-400 mb-2">✉️ info@nordicbuildgroup.se</p>
+                    <p class="text-gray-400">📍 Stockholm, Sverige</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Länkar</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#hem" class="text-gray-400 hover:text-white">Hem</a></li>
+                        <li><a href="#tjanster" class="text-gray-400 hover:text-white">Tjänster</a></li>
+                        <li><a href="#projekt" class="text-gray-400 hover:text-white">Projekt</a></li>
+                        <li><a href="#om-oss" class="text-gray-400 hover:text-white">Om Oss</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Följ Oss</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-feather="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-feather="linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-feather="youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 NordicBuild Group. Alla rättigheter förbehållna.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="w-14 h-14 bg-orange-500 hover:bg-orange-600 rounded-full shadow-lg flex items-center justify-center transition duration-300">
+            <i data-feather="message-circle" class="text-white w-6 h-6"></i>
+        </button>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Vanta.js Globe Background
+        VANTA.GLOBE({
+            el: "#hem",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x1e40af,
+            backgroundColor: 0x0
+        });
+        
+        // Before/After Slider
+        function initSlider() {
+            const slider = document.querySelector('.before-after-slider');
+            if (!slider) return;
+            
+            const beforeImage = slider.querySelector('.before-image');
+            const handle = slider.querySelector('.slider-handle');
+            
+            let isMoving = false;
+            
+            const move = (e) => {
+                if (!isMoving) return;
+                
+                let x;
+                if (e.type === 'mousemove') {
+                    x = e.pageX - slider.getBoundingClientRect().left;
+                } else {
+                    x = e.touches[0].pageX - slider.getBoundingClientRect().left;
+                }
+                
+                if (x < 0) x = 0;
+                if (x > slider.offsetWidth) x = slider.offsetWidth;
+                
+                beforeImage.style.width = x + 'px';
+                handle.style.left = x + 'px';
+            };
+            
+            const start = (e) => {
+                e.preventDefault();
+                isMoving = true;
+            };
+            
+            const stop = () => {
+                isMoving = false;
+            };
+            
+            handle.addEventListener('mousedown', start);
+            slider.addEventListener('mousemove', move);
+            document.addEventListener('mouseup', stop);
+            
+            handle.addEventListener('touchstart', start);
+            slider.addEventListener('touchmove', move);
+            document.addEventListener('touchend', stop);
+        }
+        
+        // Generate Quote Function
+        function generateQuote() {
+            const quoteResult = document.getElementById('quote-result');
+            const estimatedCost = document.getElementById('estimated-cost');
+            const projectTime = document.getElementById('project-time');
+            
+            // Randomize quote for demo purposes
+            const costs = [
+                '250 000 - 350 000 kr',
+                '450 000 - 550 000 kr', 
+                '750 000 - 900 000 kr',
+                '1.2 - 1.5 miljoner kr'
+            ];
+            
+            const times = [
+                '4-6 veckor',
+                '8-12 veckor',
+                '16-20 veckor',
+                '24-30 veckor'
+            ];
+            
+            const randomCost = costs[Math.floor(Math.random() * costs.length)];
+            const randomTime = times[Math.floor(Math.random() * times.length)];
+            
+            estimatedCost.textContent = randomCost;
+            projectTime.textContent = randomTime;
+            
+            quoteResult.classList.remove('hidden');
+            quoteResult.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initSlider();
+        });
+    </script>
+</body>
+</html>
+

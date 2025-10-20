@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - NordicBuild</title>
+    <meta name="description" content="NordicBuild admin dashboard with AI analytics, project management tools, and comprehensive construction management features.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'nordic-blue': '#4A90A4',
+                        'sage-green': '#7BA05B',
+                        'deep-charcoal': '#2C3E50',
+                        'warm-white': '#FAFAFA',
+                        'success-green': '#27AE60',
+                        'warning-amber': '#F39C12'
+                    },
+                    fontFamily: {
+                        'display': ['Inter', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .admin-bg {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.03) 0%, rgba(74, 144, 164, 0.03) 100%);
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 144, 164, 0.1);
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 250, 250, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 144, 164, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-container {
+            min-height: 300px;
+        }
+        
+        .ai-tool-card {
+            background: linear-gradient(135deg, rgba(74, 144, 164, 0.1) 0%, rgba(123, 160, 91, 0.1) 100%);
+            border: 2px dashed #4A90A4;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-tool-card:hover {
+            border-color: #7BA05B;
+            background: linear-gradient(135deg, rgba(74, 144, 164, 0.15) 0%, rgba(123, 160, 91, 0.15) 100%);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .notification-item {
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="bg-warm-white text-deep-charcoal font-body">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-nordic-blue rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">NB</span>
+                    </div>
+                    <span class="text-xl font-bold text-deep-charcoal">NordicBuild</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Home</a>
+                    <a href="services.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Services</a>
+                    <a href="portal.html" class="text-deep-charcoal hover:text-nordic-blue transition-colors">Client Portal</a>
+                    <a href="admin.html" class="text-nordic-blue font-semibold">Admin</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 text-gray-600 hover:text-nordic-blue transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                            </svg>
+                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center pulse-animation">5</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" alt="Admin Avatar" class="w-10 h-10 rounded-full">
+                        <div class="hidden md:block">
+                            <div class="font-semibold text-sm">Admin User</div>
+                            <div class="text-xs text-gray-500">System Administrator</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20 admin-bg min-h-screen">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold mb-2">Admin Dashboard</h1>
+                <p class="text-gray-600">Monitor projects, analyze performance, and manage AI tools.</p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="metric-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-nordic-blue/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-nordic-blue" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs text-success-green bg-success-green/10 px-2 py-1 rounded-full">+12%</span>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">24</div>
+                    <div class="text-sm text-gray-600">Active Projects</div>
+                </div>
+                
+                <div class="metric-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-sage-green/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-sage-green" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zM14 6a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h6zM4 14a2 2 0 002 2h8a2 2 0 002-2v-2H4v2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs text-success-green bg-success-green/10 px-2 py-1 rounded-full">+8%</span>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">€47M</div>
+                    <div class="text-sm text-gray-600">Total Value</div>
+                </div>
+                
+                <div class="metric-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-warning-amber/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-warning-amber" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs text-success-green bg-success-green/10 px-2 py-1 rounded-full">-15%</span>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">18</div>
+                    <div class="text-sm text-gray-600">Avg. Days Saved</div>
+                </div>
+                
+                <div class="metric-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-success-green/10 rounded-xl flex items-center justify-center">
+                            <svg class="w-6 h-6 text-success-green" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <span class="text-xs text-success-green bg-success-green/10 px-2 py-1 rounded-full">+25%</span>
+                    </div>
+                    <div class="text-2xl font-bold mb-1">€12M</div>
+                    <div class="text-sm text-gray-600">Cost Savings</div>
+                </div>
+            </div>
+
+             <!-- Automated Quotes & CRM -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-6">Automatiserade Offerter</h2>
+            
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                    <div>
+                        <p class="font-medium">Ny Offertförfrågan</p>
+                        <p class="text-sm text-gray-600">Villa tillbyggnad, 45 kvm</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm">AI-uppskattning: 350-450k kr</p>
+                        <button class="text-blue-600 text-sm font-medium mt-1">Hantera</button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                    <div>
+                        <p class="font-medium">Ny Offertförfrågan</p>
+                        <p class="text-sm text-gray-600">Kontorsrenovering, 200 kvm</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm">AI-uppskattning: 800-950k kr</p>
+                        <button class="text-blue-600 text-sm font-medium mt-1">Hantera</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+            <!-- Main Dashboard Grid -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Left Column - Analytics -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Project Performance Chart -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold">Project Performance Analytics</h2>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-1 bg-nordic-blue text-white rounded-lg text-sm">7D</button>
+                                <button class="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg text-sm hover:bg-gray-300">30D</button>
+                                <button class="px-3 py-1 bg-gray-200 text-gray-600 rounded-lg text-sm hover:bg-gray-300">90D</button>
+                            </div>
+                        </div>
+                        <div class="chart-container" id="performance-chart"></div>
+                    </div>
+
+                    <!-- AI Energy Analysis Tool -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold">AI Energy Analysis</h2>
+                            <button onclick="runEnergyAnalysis()" class="px-4 py-2 bg-sage-green text-white rounded-lg hover:bg-success-green transition-colors text-sm">
+                                Run Analysis
+                            </button>
+                        </div>
+                        <div class="chart-container" id="energy-chart">
+                            <div class="flex items-center justify-center h-full">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-sage-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-sage-green" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <p class="text-gray-600 mb-4">Click "Run Analysis" to start AI energy optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Management -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl font-bold">Project Management</h2>
+                            <button class="px-4 py-2 bg-nordic-blue text-white rounded-lg hover:bg-deep-charcoal transition-colors text-sm">
+                                Add Project
+                            </button>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="text-left py-3 px-4 font-semibold">Project</th>
+                                        <th class="text-left py-3 px-4 font-semibold">Status</th>
+                                        <th class="text-left py-3 px-4 font-semibold">Progress</th>
+                                        <th class="text-left py-3 px-4 font-semibold">Budget</th>
+                                        <th class="text-left py-3 px-4 font-semibold">AI Score</th>
+                                        <th class="text-left py-3 px-4 font-semibold">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="font-semibold">Eco Residential Complex</div>
+                                            <div class="text-sm text-gray-600">Stockholm, Sweden</div>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 bg-success-green text-white text-xs rounded-full">Active</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="w-20 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-success-green h-2 rounded-full" style="width: 70%"></div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">70%</div>
+                                        </td>
+                                        <td class="py-3 px-4 font-semibold">€3.2M</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-12 bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-nordic-blue h-2 rounded-full" style="width: 92%"></div>
+                                                </div>
+                                                <span class="text-sm font-semibold">92%</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="text-nordic-blue hover:text-deep-charcoal transition-colors">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                        <td class="py-3 px-4">
+                                            <div class="font-semibold">Smart Office Tower</div>
+                                            <div class="text-sm text-gray-600">Oslo, Norway</div>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="px-2 py-1 bg-warning-amber text-white text-xs rounded-full">Review</span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="w-20 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-warning-amber h-2 rounded-full" style="width: 50%"></div>
+                                            </div>
+                                            <div class="text-xs text-gray-600 mt-1">50%</div>
+                                        </td>
+                                        <td class="py-3 px-4 font-semibold">€5.1M</td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-12 bg-gray-200 rounded-full h-2">
+                                                    <div class="bg-nordic-blue h-2 rounded-full" style="width: 78%"></div>
+                                                </div>
+                                                <span class="text-sm font-semibold">78%</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <button class="text-nordic-blue hover:text-deep-charcoal transition-colors">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - AI Tools & Notifications -->
+                <div class="space-y-8">
+                    <!-- AI Tools -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h2 class="text-xl font-bold mb-6">AI Tools</h2>
+                        <div class="space-y-4">
+                            <div class="ai-tool-card rounded-xl p-4 cursor-pointer" onclick="openAIAnalysis('cost')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-nordic-blue/10 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-nordic-blue" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zM14 6a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2h6zM4 14a2 2 0 002 2h8a2 2 0 002-2v-2H4v2z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-sm">Cost Optimization</h3>
+                                        <p class="text-xs text-gray-600">AI-powered cost analysis</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-tool-card rounded-xl p-4 cursor-pointer" onclick="openAIAnalysis('timeline')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-warning-amber/10 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-warning-amber" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-sm">Timeline Optimization</h3>
+                                        <p class="text-xs text-gray-600">Predictive scheduling</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-tool-card rounded-xl p-4 cursor-pointer" onclick="openAIAnalysis('resource')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-sage-green/10 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-sage-green" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-sm">Resource Allocation</h3>
+                                        <p class="text-xs text-gray-600">Optimal resource distribution</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="ai-tool-card rounded-xl p-4 cursor-pointer" onclick="openAIAnalysis('quality')">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-success-green/10 rounded-lg flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-success-green" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 0a1 1 0 100 2h.01a1 1 0 100-2H9zm2 0a1 1 0 100 2h.01a1 1 0 100-2H11z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-sm">Quality Control</h3>
+                                        <p class="text-xs text-gray-600">AI quality monitoring</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Notifications -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold">System Alerts</h2>
+                            <button class="text-nordic-blue hover:text-deep-charcoal transition-colors text-sm">View All</button>
+                        </div>
+                        <div class="space-y-3 max-h-64 overflow-y-auto">
+                            <div class="notification-item flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <div class="w-2 h-2 bg-warning-amber rounded-full mt-2 flex-shrink-0"></div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-sm">Timeline Alert</div>
+                                    <div class="text-xs text-gray-600">Smart Office Tower behind schedule by 3 days</div>
+                                    <div class="text-xs text-gray-500 mt-1">2 minutes ago</div>
+                                </div>
+                            </div>
+                            
+                            <div class="notification-item flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                                <div class="w-2 h-2 bg-success-green rounded-full mt-2 flex-shrink-0"></div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-sm">AI Optimization Complete</div>
+                                    <div class="text-xs text-gray-600">Eco Residential cost analysis updated with 15% savings</div>
+                                    <div class="text-xs text-gray-500 mt-1">15 minutes ago</div>
+                                </div>
+                            </div>
+                            
+                            <div class="notification-item flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                <div class="w-2 h-2 bg-nordic-blue rounded-full mt-2 flex-shrink-0"></div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-sm">New Project Added</div>
+                                    <div class="text-xs text-gray-600">Helsinki Commercial Complex added to system</div>
+                                    <div class="text-xs text-gray-500 mt-1">1 hour ago</div>
+                                </div>
+                            </div>
+                            
+                            <div class="notification-item flex items-start space-x-3 p-3 bg-red-50 rounded-lg border border-red-200">
+                                <div class="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                                <div class="flex-1">
+                                    <div class="font-semibold text-sm">Budget Warning</div>
+                                    <div class="text-xs text-gray-600">Material costs increased 8% above forecast</div>
+                                    <div class="text-xs text-gray-500 mt-1">2 hours ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h2 class="text-xl font-bold mb-4">Quick Actions</h2>
+                        <div class="space-y-3">
+                            <button class="w-full p-3 bg-nordic-blue text-white rounded-lg hover:bg-deep-charcoal transition-colors text-left">
+                                <div class="font-semibold text-sm">Generate Report</div>
+                                <div class="text-xs opacity-80">Create project status report</div>
+                            </button>
+                            
+                            <button class="w-full p-3 bg-sage-green text-white rounded-lg hover:bg-success-green transition-colors text-left">
+                                <div class="font-semibold text-sm">Schedule Backup</div>
+                                <div class="text-xs opacity-80">System data backup</div>
+                            </button>
+                            
+                            <button class="w-full p-3 bg-warning-amber text-white rounded-lg hover:bg-orange-600 transition-colors text-left">
+                                <div class="font-semibold text-sm">User Management</div>
+                                <div class="text-xs opacity-80">Add/remove team members</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initPerformanceChart();
+            initRealTimeUpdates();
+        });
+
+        // Initialize performance chart
+        function initPerformanceChart() {
+            const chartDom = document.getElementById('performance-chart');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#4A90A4'
+                        }
+                    }
+                },
+                legend: {
+                    data: ['Project Progress', 'Cost Efficiency', 'AI Optimization', 'Energy Savings']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: 'Project Progress',
+                        type: 'line',
+                        stack: 'Total',
+                        smooth: true,
+                        lineStyle: {
+                            color: '#4A90A4'
+                        },
+                        areaStyle: {
+                            color: 'rgba(74, 144, 164, 0.3)'
+                        },
+                        data: [65, 72, 78, 85, 89, 92, 95]
+                    },
+                    {
+                        name: 'Cost Efficiency',
+                        type: 'line',
+                        stack: 'Total',
+                        smooth: true,
+                        lineStyle: {
+                            color: '#7BA05B'
+                        },
+                        areaStyle: {
+                            color: 'rgba(123, 160, 91, 0.3)'
+                        },
+                        data: [45, 52, 61, 68, 75, 82, 88]
+                    },
+                    {
+                        name: 'AI Optimization',
+                        type: 'line',
+                        stack: 'Total',
+                        smooth: true,
+                        lineStyle: {
+                            color: '#F39C12'
+                        },
+                        areaStyle: {
+                            color: 'rgba(243, 156, 18, 0.3)'
+                        },
+                        data: [30, 35, 42, 48, 55, 62, 70]
+                    },
+                    {
+                        name: 'Energy Savings',
+                        type: 'line',
+                        stack: 'Total',
+                        smooth: true,
+                        lineStyle: {
+                            color: '#27AE60'
+                        },
+                        areaStyle: {
+                            color: 'rgba(39, 174, 96, 0.3)'
+                        },
+                        data: [25, 32, 38, 45, 52, 58, 65]
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+            
+            // Make chart responsive
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        }
+
+        // Initialize energy analysis chart
+        function runEnergyAnalysis() {
+            const chartDom = document.getElementById('energy-chart');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                title: {
+                    text: 'Energy Efficiency Analysis',
+                    left: 'center',
+                    textStyle: {
+                        color: '#2C3E50',
+                        fontSize: 16,
+                        fontWeight: 'bold'
+                    }
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: 'Energy Consumption',
+                        type: 'pie',
+                        radius: '50%',
+                        data: [
+                            { value: 35, name: 'Heating/Cooling', itemStyle: { color: '#4A90A4' } },
+                            { value: 25, name: 'Lighting', itemStyle: { color: '#7BA05B' } },
+                            { value: 20, name: 'Equipment', itemStyle: { color: '#F39C12' } },
+                            { value: 15, name: 'Ventilation', itemStyle: { color: '#27AE60' } },
+                            { value: 5, name: 'Other', itemStyle: { color: '#95A5A6' } }
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+            
+            // Add analysis results
+            setTimeout(() => {
+                const results = document.createElement('div');
+                results.className = 'mt-4 p-4 bg-green-50 rounded-lg border border-green-200';
+                results.innerHTML = `
+                    <h4 class="font-semibold text-green-800 mb-2">Analysis Complete</h4>
+                    <div class="space-y-1 text-sm text-green-700">
+                        <div>• Potential energy savings: <strong>40%</strong></div>
+                        <div>• Recommended improvements: <strong>12</strong></div>
+                        <div>• Estimated cost reduction: <strong>€125K</strong></div>
+                        <div>• Carbon footprint reduction: <strong>35%</strong></div>
+                    </div>
+                `;
+                chartDom.appendChild(results);
+            }, 1000);
+        }
+
+        // AI Analysis tools
+        function openAIAnalysis(type) {
+            const analyses = {
+                cost: 'AI Cost Analysis initialized. Reviewing material costs, labor rates, and optimization opportunities...',
+                timeline: 'Timeline Optimization started. Analyzing project schedules, dependencies, and critical paths...',
+                resource: 'Resource Allocation analysis begun. Optimizing workforce distribution and equipment utilization...',
+                quality: 'Quality Control AI activated. Monitoring construction standards and defect prevention...'
+            };
+            
+            alert(analyses[type] || 'AI analysis started...');
+        }
+
+        // Real-time updates
+        function initRealTimeUpdates() {
+            // Simulate real-time metric updates
+            setInterval(() => {
+                updateMetrics();
+            }, 30000); // Update every 30 seconds
+        }
+
+        function updateMetrics() {
+            // Simulate small changes in metrics
+            const metrics = document.querySelectorAll('.metric-card .text-2xl');
+            metrics.forEach(metric => {
+                const currentValue = parseInt(metric.textContent.replace(/[^\d]/g, ''));
+                const change = Math.floor(Math.random() * 3) - 1; // -1, 0, or 1
+                const newValue = Math.max(0, currentValue + change);
+                
+                if (metric.textContent.includes('€')) {
+                    metric.textContent = '€' + newValue + 'M';
+                } else if (metric.textContent.includes('%')) {
+                    metric.textContent = newValue + '%';
+                } else {
+                    metric.textContent = newValue;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
