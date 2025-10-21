@@ -252,6 +252,14 @@ directBookMeetingBtn.addEventListener("click", () => {
   contactForm.scrollIntoView({ behavior: "smooth" });
 });
 
+// Function to show contact form (used by package buttons)
+function showContactForm() {
+  quoteResult.style.display = "none";
+  contactForm.style.display = "block";
+  contactForm.scrollIntoView({ behavior: "smooth" });
+  return false;
+}
+
 // Meeting Form Submission
 meetingForm.addEventListener("submit", (e) => {
   e.preventDefault();
