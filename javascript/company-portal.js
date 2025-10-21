@@ -16,13 +16,20 @@ document.querySelectorAll(".tab-link").forEach((link) => {
 
     // Show loading state
     const tabContent = document.getElementById(tabId);
+    let originalContent = "";
     if (tabContent) {
+      originalContent = tabContent.innerHTML;
       tabContent.innerHTML =
         '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Laddar...</div>';
     }
 
     // Simulate loading delay for better UX
     setTimeout(() => {
+      // Restore original content
+      if (tabContent) {
+        tabContent.innerHTML = originalContent;
+      }
+
       // Remove active class from all tabs
       document.querySelectorAll(".tab-link").forEach((tab) => {
         tab.classList.remove("active");
