@@ -570,6 +570,97 @@ function initializeButtons() {
   }
 }
 
+// Initialize additional modal buttons
+function initializeModalButtons() {
+  // Ladda ner fullständig rapport button in overview
+  const downloadEnergyReportBtn = document.querySelector("#overview .portal-card-dark:nth-child(3) button");
+  if (downloadEnergyReportBtn && downloadEnergyReportBtn.textContent.includes("Ladda ner fullständig rapport")) {
+    downloadEnergyReportBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-download" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>Energirapport för Villa Stocksund</h4>
+          <p>Rapporten innehåller detaljerad analys av energiförbrukning, besparingar och rekommendationer.</p>
+          <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <strong>Rapportinnehåll:</strong>
+            <ul style="text-align: left; margin-top: 0.5rem;">
+              <li>Energianalys baserat på design</li>
+              <li>Kostnadsbesparingar (8 500 kr/år)</li>
+              <li>Effektivitetsrekommendationer</li>
+              <li>Miljöpåverkan</li>
+              <li>Tekniska specifikationer</li>
+            </ul>
+          </div>
+          <button class="btn btn-primary" onclick="alert('Rapporten laddas ner...')">Starta nedladdning</button>
+        </div>
+      `;
+      showModal("Ladda ner Energirapport", content);
+    });
+  }
+
+  // Exportera till kalender button in calendar tab
+  const exportCalendarBtn = document.querySelector("#calendar button");
+  if (exportCalendarBtn && exportCalendarBtn.textContent.includes("Exportera till kalender")) {
+    exportCalendarBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-calendar-plus" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+          <h4>Exportera Projektkalender</h4>
+          <p>Välj vilket kalenderformat du vill exportera till:</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+            <button class="btn btn-primary" onclick="alert('Exporterar till Google Calendar...')">
+              <i class="fab fa-google"></i> Google Calendar
+            </button>
+            <button class="btn btn-primary" onclick="alert('Exporterar till Outlook...')">
+              <i class="fab fa-microsoft"></i> Outlook Calendar
+            </button>
+            <button class="btn btn-primary" onclick="alert('Exporterar till Apple Calendar...')">
+              <i class="fab fa-apple"></i> Apple Calendar
+            </button>
+            <button class="btn" onclick="alert('Laddar ner .ics-fil...')">
+              <i class="fas fa-download"></i> Ladda ner .ics-fil
+            </button>
+          </div>
+          <p style="font-size: 0.9rem; color: #666;">Alla viktiga datum från ditt projekt kommer att läggas till i din kalender.</p>
+        </div>
+      `;
+      showModal("Exportera till Kalender", content);
+    });
+  }
+
+  // Ladda ner garantidokument button in warranties tab
+  const downloadWarrantyBtn = document.querySelector("#warranties button");
+  if (downloadWarrantyBtn && downloadWarrantyBtn.textContent.includes("Ladda ner garantidokument")) {
+    downloadWarrantyBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+          <h4>Garantidokument för Villa Stocksund</h4>
+          <p>Ladda ner dina garantidokument och information om garantiperioder.</p>
+          <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <strong>Tillgängliga dokument:</strong>
+            <ul style="text-align: left; margin-top: 0.5rem;">
+              <li>Huvudgaranti - Bygggaranti (20 år)</li>
+              <li>Elinstallationer - 5 års garanti</li>
+              <li>VVS-installationer - 5 års garanti</li>
+              <li>Värmepump - 7 års garanti</li>
+              <li>Ventilation - 3 års garanti</li>
+            </ul>
+          </div>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button class="btn btn-primary" onclick="alert('Laddar ner alla garantidokument...')">Ladda ner alla</button>
+            <button class="btn" onclick="alert('Öppnar garantidokument online...')">Visa online</button>
+          </div>
+        </div>
+      `;
+      showModal("Garantidokument", content);
+    });
+  }
+}
+
 // Initialize all interactive elements on page load
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize accordions for active tab
@@ -589,4 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize button functionality
   initializeButtons();
+
+  // Initialize additional modal buttons
+  initializeModalButtons();
 });

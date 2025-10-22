@@ -1508,6 +1508,345 @@ function initializeReportsButtons() {
   }
 }
 
+// Initialize additional modal buttons for company portal
+function initializeCompanyModalButtons() {
+  // Replace "Skapa offert" and "Kontakta kund" buttons in request management modal
+  const requestModalOfferButtons = document.querySelectorAll('.activity-warning button');
+  requestModalOfferButtons.forEach(button => {
+    if (button.textContent.includes('Skapa offert')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-file-invoice-dollar" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h4>Skapa Offert</h4>
+            <p>Generera en professionell offert baserat på kundens förfrågan.</p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0; text-align: left;">
+              <strong>Offertinnehåll:</strong>
+              <ul style="margin-top: 0.5rem;">
+                <li>Detaljerad kostnadsberäkning</li>
+                <li>Tidsplan och milstolpar</li>
+                <li>Materialspecifikationer</li>
+                <li>Garantivillkor</li>
+                <li>Betalningsplan</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Offertgenerator öppnas...')">Öppna Offertgenerator</button>
+          </div>
+        `;
+        showModal("Skapa Offert", content);
+      });
+    } else if (button.textContent.includes('Kontakta kund')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-envelope" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+            <h4>Kontakta Kund</h4>
+            <p>Skicka ett professionellt svar på kundens förfrågan.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+              <button class="btn btn-primary" onclick="alert('E-post öppnas...')">
+                <i class="fas fa-envelope"></i> Skicka e-post
+              </button>
+              <button class="btn btn-primary" onclick="alert('Telefon öppnas...')">
+                <i class="fas fa-phone"></i> Ring kund
+              </button>
+              <button class="btn btn-primary" onclick="alert('Möte bokas...')">
+                <i class="fas fa-calendar-plus"></i> Boka möte
+              </button>
+            </div>
+          </div>
+        `;
+        showModal("Kontakta Kund", content);
+      });
+    }
+  });
+
+  // Replace "Lägg till personal" and "Ändra schema" buttons in team management
+  const teamModalButtons = document.querySelectorAll('.activity-info button');
+  teamModalButtons.forEach(button => {
+    if (button.textContent.includes('Lägg till personal')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="max-width: 500px; margin: 0 auto;">
+            <h4>Lägg till Personal till Projekt</h4>
+            <form style="display: flex; flex-direction: column; gap: 1rem;">
+              <div>
+                <label for="employeeSelect" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Välj Medarbetare</label>
+                <select id="employeeSelect" class="form-control" required>
+                  <option value="">Välj medarbetare...</option>
+                  <option value="david">David Eriksson - Projektledare</option>
+                  <option value="anders">Anders Pettersson - Snickare</option>
+                  <option value="emma">Emma Lundgren - Elektriker</option>
+                  <option value="lisa">Lisa Andersson - VVS-tekniker</option>
+                  <option value="mikael">Mikael Karlsson - Målare</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="roleSelect" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Roll i Projektet</label>
+                <select id="roleSelect" class="form-control" required>
+                  <option value="">Välj roll...</option>
+                  <option value="projektledare">Projektledare</option>
+                  <option value="snickare">Snickare</option>
+                  <option value="elektriker">Elektriker</option>
+                  <option value="vvs">VVS-tekniker</option>
+                  <option value="malare">Målare</option>
+                  <option value="grundare">Grundläggare</option>
+                </select>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label for="startDate" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Tilldelningsdatum</label>
+                  <input type="date" id="startDate" class="form-control" required>
+                </div>
+                <div>
+                  <label for="allocation" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Allokering (%)</label>
+                  <input type="number" id="allocation" class="form-control" min="1" max="100" value="100" required>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;" onclick="alert('Personal tillagd till projekt!')">Lägg till Personal</button>
+                <button type="button" class="btn" onclick="this.closest('.custom-modal').remove()">Avbryt</button>
+              </div>
+            </form>
+          </div>
+        `;
+        showModal("Lägg till Personal", content);
+      });
+    } else if (button.textContent.includes('Ändra schema')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-calendar-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h4>Ändra Projektsschema</h4>
+            <p>Justera schemaläggning och resurstilldelning för projektet.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+              <button class="btn btn-primary" onclick="alert('Schemaläggare öppnas...')">
+                <i class="fas fa-calendar-week"></i> Öppna Schemaläggare
+              </button>
+              <button class="btn btn-primary" onclick="alert('Resursplanering öppnas...')">
+                <i class="fas fa-users-cog"></i> Resursplanering
+              </button>
+              <button class="btn btn-primary" onclick="alert('Tidsplan öppnas...')">
+                <i class="fas fa-clock"></i> Justera Tidsplan
+              </button>
+            </div>
+          </div>
+        `;
+        showModal("Ändra Schema", content);
+      });
+    }
+  });
+
+  // Replace "Lägg till kund" button in customer registry modal
+  const addCustomerBtn = document.querySelector('#crm .portal-card-dark button');
+  if (addCustomerBtn && addCustomerBtn.textContent.includes('Lägg till kund')) {
+    addCustomerBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const content = `
+        <div style="max-width: 500px; margin: 0 auto;">
+          <h4>Lägg till Ny Kund</h4>
+          <form style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <label for="customerType" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Kundtyp</label>
+              <select id="customerType" class="form-control" required>
+                <option value="">Välj typ...</option>
+                <option value="privat">Privatperson</option>
+                <option value="foretag">Företag</option>
+                <option value="offentlig">Offentlig sektor</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="customerName" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Kundnamn/Företagsnamn</label>
+              <input type="text" id="customerName" class="form-control" placeholder="t.ex. Familjen Andersson" required>
+            </div>
+
+            <div>
+              <label for="contactPerson" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Kontaktperson</label>
+              <input type="text" id="contactPerson" class="form-control" placeholder="t.ex. Anna Andersson" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label for="phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Telefon</label>
+                <input type="tel" id="phone" class="form-control" placeholder="070-123 45 67" required>
+              </div>
+              <div>
+                <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">E-post</label>
+                <input type="email" id="email" class="form-control" placeholder="anna@email.se" required>
+              </div>
+            </div>
+
+            <div>
+              <label for="address" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Adress</label>
+              <input type="text" id="address" class="form-control" placeholder="Storgatan 12, 123 45 Stockholm" required>
+            </div>
+
+            <div>
+              <label for="notes" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Anteckningar</label>
+              <textarea id="notes" class="form-control" rows="3" placeholder="Valfri information om kunden..."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+              <button type="submit" class="btn btn-primary" style="flex: 1;" onclick="alert('Kund tillagd i registret!')">Lägg till Kund</button>
+              <button type="button" class="btn" onclick="this.closest('.custom-modal').remove()">Avbryt</button>
+            </div>
+          </form>
+        </div>
+      `;
+      showModal("Lägg till Ny Kund", content);
+    });
+  }
+
+
+
+  // Replace "Ladda ner komplett rapport (PDF)" buttons in report modals
+  const downloadReportButtons = document.querySelectorAll('button');
+  downloadReportButtons.forEach(button => {
+    if (button.textContent.includes('Ladda ner komplett rapport (PDF)')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-download" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+            <h4>Ladda ner Rapport</h4>
+            <p>Rapporten innehåller detaljerad analys och kommer att laddas ner som PDF.</p>
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+              <strong>Rapportinnehåll:</strong>
+              <ul style="text-align: left; margin-top: 0.5rem;">
+                <li>Sammanfattning och nyckeltal</li>
+                <li>Detaljerad analys</li>
+                <li>Diagram och visualiseringar</li>
+                <li>Rekommendationer</li>
+                <li>Tekniska specifikationer</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Rapporten laddas ner...')">Starta nedladdning</button>
+          </div>
+        `;
+        showModal("Ladda ner Rapport", content);
+      });
+    }
+  });
+
+  // Replace "Exportera data (Excel)" buttons in report modals
+  const exportDataButtons = document.querySelectorAll('button');
+  exportDataButtons.forEach(button => {
+    if (button.textContent.includes('Exportera data (Excel)')) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = `
+          <div style="text-align: center; padding: 2rem;">
+            <i class="fas fa-file-excel" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+            <h4>Exportera Data till Excel</h4>
+            <p>Välj vilka data du vill exportera och i vilket format.</p>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+              <button class="btn btn-primary" onclick="alert('Exporterar till Excel...')">
+                <i class="fas fa-file-excel"></i> Exportera komplett dataset (.xlsx)
+              </button>
+              <button class="btn btn-primary" onclick="alert('Exporterar till CSV...')">
+                <i class="fas fa-file-csv"></i> Exportera som CSV (.csv)
+              </button>
+              <button class="btn" onclick="alert('Anpassade alternativ öppnas...')">
+                <i class="fas fa-cogs"></i> Anpassade exportalternativ
+              </button>
+            </div>
+            <p style="font-size: 0.9rem; color: #666;">Alla data exporteras enligt GDPR och dataskyddsregler.</p>
+          </div>
+        `;
+        showModal("Exportera Data", content);
+      });
+    }
+  });
+
+  // Replace "Öppna riskhantering" button in risk analysis modal
+  const riskManagementBtn = document.querySelector('button');
+  if (riskManagementBtn && riskManagementBtn.textContent.includes('Öppna riskhantering')) {
+    riskManagementBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-shield-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+          <h4>Riskhanteringssystem</h4>
+          <p>Öppna det avancerade riskhanteringssystemet för detaljerad analys och åtgärdsplanering.</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+            <button class="btn btn-primary" onclick="alert('Riskhanteringssystem öppnas...')">
+              <i class="fas fa-external-link-alt"></i> Öppna Riskhantering
+            </button>
+            <button class="btn" onclick="alert('Riskrapport öppnas...')">
+              <i class="fas fa-file-alt"></i> Visa Riskrapport
+            </button>
+          </div>
+          <p style="font-size: 0.9rem; color: #666;">Systemet innehåller realtidsuppdateringar och AI-driven riskanalys.</p>
+        </div>
+      `;
+      showModal("Riskhantering", content);
+    });
+  }
+
+  // Replace "Hållbarhetsportal" button in sustainability report modal
+  const sustainabilityPortalBtn = document.querySelector('button');
+  if (sustainabilityPortalBtn && sustainabilityPortalBtn.textContent.includes('Hållbarhetsportal')) {
+    sustainabilityPortalBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-leaf" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+          <h4>Hållbarhetsportal</h4>
+          <p>Utforska NordicBuilds hållbarhetsinitiativ och miljöarbete.</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+            <button class="btn btn-primary" onclick="alert('Hållbarhetsportal öppnas...')">
+              <i class="fas fa-external-link-alt"></i> Öppna Hållbarhetsportal
+            </button>
+            <button class="btn" onclick="alert('Miljöpolicy öppnas...')">
+              <i class="fas fa-file-contract"></i> Miljöpolicy & Certifieringar
+            </button>
+            <button class="btn" onclick="alert('Hållbarhetsmål öppnas...')">
+              <i class="fas fa-target"></i> Hållbarhetsmål 2030
+            </button>
+          </div>
+          <p style="font-size: 0.9rem; color: #666;">Portalen innehåller interaktiva verktyg för hållbarhetsuppföljning.</p>
+        </div>
+      `;
+      showModal("Hållbarhetsportal", content);
+    });
+  }
+
+  // Replace "Rekrytera ny personal" button in team modal
+  const recruitBtn = document.querySelector('.activity-list button');
+  if (recruitBtn && recruitBtn.textContent.includes('Rekrytera ny personal')) {
+    recruitBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const content = `
+        <div style="text-align: center; padding: 2rem;">
+          <i class="fas fa-user-plus" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+          <h4>Rekrytera Ny Personal</h4>
+          <p>Starta rekryteringsprocessen för nya medarbetare.</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0;">
+            <button class="btn btn-primary" onclick="alert('Rekryteringsportal öppnas...')">
+              <i class="fas fa-external-link-alt"></i> Öppna Rekryteringsportal
+            </button>
+            <button class="btn" onclick="alert('Lediga tjänster visas...')">
+              <i class="fas fa-list"></i> Visa Lediga Tjänster
+            </button>
+            <button class="btn" onclick="alert('Rekryteringsstatistik öppnas...')">
+              <i class="fas fa-chart-bar"></i> Rekryteringsstatistik
+            </button>
+          </div>
+          <p style="font-size: 0.9rem; color: #666;">Vi använder ett modernt rekryteringssystem med AI-driven kandidatmatchning.</p>
+        </div>
+      `;
+      showModal("Rekrytera Personal", content);
+    });
+  }
+}
+
 // Initialize all interactive elements on page load
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize accordions for active tab
@@ -1527,4 +1866,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize company portal button functionality
   initializeCompanyButtons();
+
+  // Initialize additional modal buttons for company portal
+  initializeCompanyModalButtons();
 });
