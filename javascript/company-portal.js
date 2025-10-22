@@ -71,6 +71,11 @@ function initializeTabInteractivity(tabId) {
 
   // Initialize reports tab buttons
   initializeReportsButtons();
+
+  // Initialize risk analysis for AI Risk tab
+  if (tabId === "ai-risk") {
+    initializeRiskAnalysis();
+  }
 }
 
 // Accordion functionality
@@ -289,26 +294,7 @@ function initializeSwipeGestures() {
 }
 
 // AI Risk Analysis Demo with enhanced interactivity
-const riskAnalysisBtn = document.getElementById("runRiskAnalysis");
-const riskResults = document.getElementById("riskResults");
-const riskScore = document.getElementById("riskScore");
-const riskLevel = document.getElementById("riskLevel");
-const riskFactors = document.getElementById("riskFactors");
-
-if (riskAnalysisBtn) {
-  riskAnalysisBtn.addEventListener("click", () => {
-    // Show loading state
-    riskAnalysisBtn.textContent = "Analyserar risker...";
-    riskAnalysisBtn.disabled = true;
-
-    // Simulate AI analysis delay
-    setTimeout(() => {
-      runRiskAnalysis();
-      riskAnalysisBtn.textContent = "Kör riskanalys";
-      riskAnalysisBtn.disabled = false;
-    }, 2000);
-  });
-}
+// Note: Event listener is now attached in initializeRiskAnalysis() when tab becomes active
 
 function runRiskAnalysis() {
   // Mock AI risk analysis results
@@ -419,6 +405,26 @@ function getRiskColor(risk) {
       return "#28a745";
     default:
       return "#6c757d";
+  }
+}
+
+// Initialize risk analysis functionality for AI Risk tab
+function initializeRiskAnalysis() {
+  // Ensure risk analysis elements are properly initialized
+  const riskAnalysisBtn = document.getElementById("runRiskAnalysis");
+  const riskResults = document.getElementById("riskResults");
+
+  if (riskAnalysisBtn && riskResults) {
+    // Reset any previous results
+    riskResults.style.display = "none";
+    riskAnalysisBtn.textContent = "Kör riskanalys";
+    riskAnalysisBtn.disabled = false;
+
+    // Attach event listener if not already attached
+    if (!riskAnalysisBtn.hasAttribute('data-listener-attached')) {
+      riskAnalysisBtn.addEventListener("click", runRiskAnalysis);
+      riskAnalysisBtn.setAttribute('data-listener-attached', 'true');
+    }
   }
 }
 
