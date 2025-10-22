@@ -492,6 +492,121 @@ function initializeButtons() {
     });
   }
 
+  // Visa alla fakturor button in overview
+  const invoiceCard = Array.from(document.querySelectorAll("#overview .portal-card-dark")).find(card => card.querySelector("h3 i.fa-file-invoice"));
+  const showAllInvoicesOverviewBtn = invoiceCard ? invoiceCard.querySelector("button") : null;
+  if (showAllInvoicesOverviewBtn && showAllInvoicesOverviewBtn.textContent.includes("Visa alla fakturor")) {
+    showAllInvoicesOverviewBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const content = `
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fakturanr</th>
+                <th>Belopp</th>
+                <th>Förfallodatum</th>
+                <th>Status</th>
+                <th>Åtgärd</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NBG-23001</td>
+                <td>125 000 kr</td>
+                <td>20 okt 2023</td>
+                <td><span class="status-indicator status-on-track">Betald</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23002</td>
+                <td>175 000 kr</td>
+                <td>15 nov 2023</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23003</td>
+                <td>200 000 kr</td>
+                <td>15 dec 2023</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23004</td>
+                <td>125 000 kr</td>
+                <td>15 jan 2024</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23005</td>
+                <td>150 000 kr</td>
+                <td>15 feb 2024</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 1rem; text-align: center;">
+          <strong>Totalt: 775 000 kr</strong> | <strong>Betalt: 125 000 kr</strong> | <strong>Återstår: 650 000 kr</strong>
+        </div>
+      `;
+      showModal("Alla Fakturor", content);
+    });
+  }
+
+  // Hantera fakturor button in overview
+  const manageInvoicesBtn = document.querySelector("#overview .portal-card-dark:nth-child(4) button");
+  if (manageInvoicesBtn && manageInvoicesBtn.textContent.includes("Hantera fakturor")) {
+    manageInvoicesBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      const content = `
+        <div class="table-responsive" style="margin-bottom: 2rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fakturanr</th>
+                <th>Belopp</th>
+                <th>Förfallodatum</th>
+                <th>Status</th>
+                <th>Åtgärd</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NBG-23001</td>
+                <td>125 000 kr</td>
+                <td>20 okt 2023</td>
+                <td><span class="status-indicator status-on-track">Betald</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23002</td>
+                <td>175 000 kr</td>
+                <td>15 nov 2023</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+              <tr>
+                <td>NBG-23003</td>
+                <td>200 000 kr</td>
+                <td>15 dec 2023</td>
+                <td><span class="status-indicator">Väntar</span></td>
+                <td><button class="btn" onclick="alert('Öppnar faktura...')">Visa</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 1rem; text-align: center;">
+          <strong>Totalt: 500 000 kr</strong> | <strong>Betalt: 125 000 kr</strong> | <strong>Återstår: 375 000 kr</strong>
+        </div>
+      `;
+      showModal("Fakturor", content);
+    });
+  }
+
   // Visa alla dokument button
   const showAllDocumentsBtn = document.querySelector("#documents button");
   if (
