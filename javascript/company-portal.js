@@ -297,6 +297,12 @@ function initializeSwipeGestures() {
 // Note: Event listener is now attached in initializeRiskAnalysis() when tab becomes active
 
 function runRiskAnalysis() {
+  // Get DOM elements
+  const riskScore = document.getElementById("riskScore");
+  const riskLevel = document.getElementById("riskLevel");
+  const riskFactors = document.getElementById("riskFactors");
+  const riskResults = document.getElementById("riskResults");
+
   // Mock AI risk analysis results
   const mockRisks = [
     {
@@ -1875,4 +1881,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize additional modal buttons for company portal
   initializeCompanyModalButtons();
+
+  // Initialize risk analysis button (attach listener on page load to ensure it works regardless of tab activation order)
+  const riskAnalysisBtn = document.getElementById("runRiskAnalysis");
+  if (riskAnalysisBtn) {
+    riskAnalysisBtn.addEventListener("click", runRiskAnalysis);
+  }
 });
